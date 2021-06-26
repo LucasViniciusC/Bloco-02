@@ -3,6 +3,7 @@ package com.aula_generation.blogPessoal.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,34 +23,41 @@ import com.aula_generation.blogPessoal.repository.PostagemRepository;
 public class PostagemController {
 
 	@Autowired
-	PostagemRepository postagemRepository;
-	
-	//Listando os dados inseridos na tabela
+	private PostagemRepository postagemRepository;
+
+	// Listando os dados inseridos na tabela
 	@GetMapping("/listarpostagem")
-	public List<Postagem> listaPostagens(){
+	public List<Postagem> listaPostagens() {
 		return postagemRepository.findAll();
 	}
-	
-	//Buscando um dado por ID
-	@GetMapping("/postagemespecifica/{id}")
-	public Postagem listaProdutoEspecifico(@PathVariable(value="id") long id) {
+
+	// Buscando um dado por ID
+	@GetMapping("/postagemid/{id}")
+	public Postagem listaProdutoEspecifico(@PathVariable long id) {
 		return postagemRepository.findById(id);
 	}
 	
-	//Inserindo um novo dado na tabela
+	// Buscando por titulo inserido
+	@GetMapping("/buscatitulo/{titulo}")
+	public ResponseEntity<List<Postagem>> listaPostagemPorTitulo(@PathVariable String titulo){
+		return ResponseEntity.ok(postagemRepository.findByTituloContainingIgnoreCase(titulo));
+	}
+	
+	// Inserindo um novo dado na tabela
 	@PostMapping("/postagem")
 	public Postagem novaPostagem(@RequestBody Postagem postagem) {
 		return postagemRepository.save(postagem);
 	}
-	//Deletando um dado na tabela
-	@DeleteMapping("/postagem")
-	public void apagarPostagem(@RequestBody Postagem postagem) {
-		postagemRepository.delete(postagem);
-	}
-	
-	//Alterando um dado na tabela
+
+	// Alterando um dado na tabela atráves do id
 	@PutMapping("/postagem")
 	public Postagem alterarPostagem(@RequestBody Postagem postagem) {
 		return postagemRepository.save(postagem);
+	}
+
+	// Deletando um dado na tabela atráves do id
+	@DeleteMapping("/postagem/{id}")
+	public Postagem apagarPostagem(@PathVariable long id) {
+		return postagemRepository.deleteById(id);
 	}
 }
