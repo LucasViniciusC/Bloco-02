@@ -11,5 +11,5 @@ import com.aula_generation.blogPessoal.model.Postagem;
 public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 	public Postagem findById(long id);
 	public Postagem deleteById(long id);
-	public List<Postagem>findByTituloContainingIgnoreCase(String Titulo);
+	public List<Postagem>findByTituloContainingIgnoreCase(String descricao);
 }

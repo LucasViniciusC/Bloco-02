@@ -19,7 +19,7 @@ import com.aula_generation.blogPessoal.repository.PostagemRepository;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostagemController {
 
 	@Autowired
