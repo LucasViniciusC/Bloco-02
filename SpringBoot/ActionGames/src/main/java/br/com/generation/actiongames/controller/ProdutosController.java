@@ -28,9 +28,10 @@ public class ProdutosController {
 	}
 
 	@GetMapping("/{id}")
-	private Produto buscarPorId(@PathVariable long id) {
+	public Produto getById(@PathVariable long id){
 		return repository.findById(id);
 	}
+	
 
 	@GetMapping("/buscar/{titulo}")
 	private Produto buscarUmProduto(@PathVariable String titulo) {
@@ -46,7 +47,7 @@ public class ProdutosController {
 	private Produto alterarProduto(@RequestBody Produto produto) {
 		return repository.save(produto);
 	}
-	
+
 	@DeleteMapping("/apagar/{id}")
 	private Produto apagarProduto(@PathVariable long id) {
 		return repository.deleteById(id);
